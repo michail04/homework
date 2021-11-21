@@ -17,19 +17,19 @@ class Student:
         else:
             return 'Ошибка'
 
-    def rate_student(self, student, course, grade):
-        pass
-
-
-
-
+     def lecturer_average_grades(self, lecturer):
+        sum_grades = sum(map(sum,some_lecturer.grades.values()))
+        for key, values in sorted(some_lecturer.grades.items()):
+            lecturer.average_grades = sum_grades / len(values)
+        return lecturer.average_grades
+    
 
     def _lt_(self, lecturer):
         return self.average_grades < lecturer.average_grades
 
     def __str__(self):
         some_student = f'Имя: {self.name}\n Фамилмя: {self.surname}\n Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n завершенные курсы: {" ".join(self.finished_courses)}\n ' \
-                       f'Средняя оценка за ДЗ: {", ".join(self.average_grades)}'
+                       f'Средняя оценка за ДЗ: {self.average_grades}'
         return some_student
 
 
@@ -47,7 +47,7 @@ class Lecturer(Mentor):
         self.average_grades = []
 
     def __str__(self):
-        some_lecturer = f' Имя лектора: {self.name}\n Фамилмя лектора: {self.surname}\n Средняя оценка всех лекторов за лекции: {", ".join(self.average_grades)}\n'
+        some_lecturer = f' Имя лектора: {self.name}\n Фамилмя лектора: {self.surname}\n Средняя оценка всех лекторов за лекции: {self.average_grades}\n'
         return some_lecturer
 
 
@@ -64,11 +64,11 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
-    def rate_student(self, student, course, grade):
-        pass
-
-
-
+    def student_average_grades(self, student):
+        sum_grades = sum(map(sum,some_student.grades.values()))
+        for key, values in sorted(some_student.grades.items()):
+            student.average_grades = sum_grades / len(values)
+        return student.average_grades
 
     def __str__(self):
         some_reviewer = f' Имя контролера: {self.name}\n Фамилмя контролера: {self.surname}\n'
@@ -94,15 +94,15 @@ some_lecturer.courses_attached = ['Python']
 some_lecturer = Lecturer('Some', 'Buddy')
 some_lecturer.courses_attached = ['Python']
 
-some_lecturer.rate_student = [some_student, 'Python', 9.3, some_student, 'Python', 9.5, some_student, 'Python', 9.2]
+# some_lecturer.rate_student = [some_student, 'Python', 9.3, some_student, 'Python', 9.5, some_student, 'Python', 9.2]
+# some_student.rate_lecturer = [some_lecturer, 'Python', 9.6, some_lecturer, 'Python', 9.3, some_lecturer, 'Python', 9.8]
+some_student.rate_lecturer(some_lecturer,'Python', 9.0)
+some_student.rate_lecturer(some_lecturer,'Python', 9.3)
+some_student.rate_lecturer(some_lecturer,'Python', 9.6)
 
-some_student.rate_lecturer = [some_lecturer, 'Python', 9.6, some_lecturer, 'Python', 9.3, some_lecturer, 'Python', 9.8]
-
-
-def lecturer_grades(self):
-    for i in range(len(some_student.rate_lecturer)):
-        some_lecturer.grades = '; '.join(some_student.rate_lecturer[i].values())
-    return some_lecturer.grades
+some_reviewer.rate_student(some_student,'Python', 9.8)
+some_reviewer.rate_student(some_student,'Python', 6.3)
+some_reviewer.rate_student(some_student,'Python', 7.6)
 
 
 print(f'{some_reviewer} \n{some_lecturer} \n{some_student}')
