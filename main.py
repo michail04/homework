@@ -17,19 +17,20 @@ class Student:
             else:
                 lecturer.grades[course] = [grade]
         else:
-            return 'Ошибка'
+            return 'нет такого курса'
 
     def lecturer_average_grades(self, lecturer):
-        sum_grades = sum(map(sum,some_lecturer.grades.values()))
+        sum_grades = sum(map(sum, some_lecturer.grades.values()))
         for key, values in sorted(some_lecturer.grades.items()):
-            return sum_grades / len(values)
+            lecturer.average_grades.append(sum_grades / len(values))
+        return lecturer.average_grades
 
     def _lt_(self, lecturer):
         return self.average_grades < lecturer.average_grades
 
     def __str__(self):
-        some_student = f'Имя: {self.name}\n Фамилмя: {self.surname}\n Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n завершенные курсы: {" ".join(self.finished_courses)}\n ' \
-                       f'Средняя оценка за ДЗ: {self.average_grades}'
+        some_student = f' Имя: {self.name}\n Фамилмя: {self.surname}\n Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n завершенные курсы: {" ".join(self.finished_courses)}\n ' \
+                       f'Средняя оценка за ДЗ: {some_student_1.grades}'
         return some_student
 
 
@@ -37,7 +38,7 @@ class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
-        self.courses_attached = []
+        self.courses_attached = {}
 
 
 class Lecturer(Mentor):
@@ -47,8 +48,8 @@ class Lecturer(Mentor):
         self.average_grades = {}
 
     def __str__(self):
-        some_lecturer = f' Имя лектора: {self.name}\n Фамилмя лектора: {self.surname}\n Средняя оценка за лекции: {self.average_grades}\n'
-        return some_lecturer
+        some_lecturer_list = f' Имя лектора: {self.name}\n Фамилмя лектора: {self.surname}\n Средняя оценка за лекции: {self.grades}\n'
+        return some_lecturer_list
 
 
 class Reviewer(Mentor):
@@ -65,10 +66,10 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
     def student_average_grades(self, student):
-        sum_grades = sum(map(sum,some_student.grades.values()))
+        sum_grades = sum(map(sum, some_student.grades.values()))
         for key, values in sorted(some_student.grades.items()):
-            student.average_grades = sum_grades / len(values)
-        return student.average_grades
+            student.average_grades.append(sum_grades / len(values))
+        return student.aveage_grades
 
     def __str__(self):
         some_reviewer = f' Имя контролера: {self.name}\n Фамилмя контролера: {self.surname}\n'
@@ -77,35 +78,36 @@ class Reviewer(Mentor):
 
 some_reviewer = Reviewer('Some', 'Buddy')
 
-some_student = Student('Jerry', 'mouse', 'male')
-some_student.courses_in_progress = ['Python', 'Git']
-some_student.finished_courses = ['Введение в программирование']
-some_student = Student('Tom', 'Cruz', 'male')
-some_student.courses_in_progress = ['Python', 'Git']
-some_student.finished_courses = ['Введение в программирование']
-some_student = Student('Ruoy', 'Eman', 'male')
-some_student.courses_in_progress = ['Python', 'Git']
-some_student.finished_courses = ['Введение в программирование']
+some_student_1 = Student('Jerry', 'mouse', 'male')
+some_student_1.courses_in_progress = ['Python', 'Git']
+some_student_1.finished_courses = ['Введение в программирование']
+some_student_2 = Student('Tom', 'Cruz', 'male')
+some_student_2.courses_in_progress = ['Python', 'Git']
+some_student_2.finished_courses = ['Введение в программирование']
+some_student_3 = Student('Ruoy', 'Eman', 'male')
+some_student_3.courses_in_progress = ['Python', 'Git']
+some_student_3.finished_courses = ['Введение в программирование']
 
-some_lecturer = Lecturer('How', 'Buddy')
-some_lecturer.courses_attached = ['Python']
-some_lecturer = Lecturer('Any', 'Buddy')
-some_lecturer.courses_attached = ['Python']
-some_lecturer = Lecturer('Some', 'Buddy')
-some_lecturer.courses_attached = ['Python']
+some_lecturer_1 = Lecturer('How', 'Buddy')
+some_lecturer_1.courses_attached = ['Python']
+some_lecturer_2 = Lecturer('Any', 'Buddy')
+some_lecturer_2.courses_attached = ['Python']
+some_lecturer_3 = Lecturer('Some', 'Buddy')
+some_lecturer_3.courses_attached = ['Python']
 
-# some_lecturer.rate_student = [some_student, 'Python', 9.3, some_student, 'Python', 9.5, some_student, 'Python', 9.2]
-# some_student.rate_lecturer = [some_lecturer, 'Python', 9.6, some_lecturer, 'Python', 9.3, some_lecturer, 'Python', 9.8]
-some_student.rate_lecturer(some_lecturer, 'Python', 9.0)
-some_student.rate_lecturer(some_lecturer, 'Python', 9.3)
-some_student.rate_lecturer(some_lecturer, 'Python', 9.6)
+# student_average_grades = {some_student_1: ['Python', 9.3], some_student_2: ['Python', 9.5], some_student_3: ['Python', 9.2]}
+# lecturer_average_grades = {some_lecturer_1: ['Python', 9.6], some_lecturer_2: ['Python', 9.3], some_lecturer_3: ['Python', 9.8]}
 
-some_reviewer.rate_student(some_student, 'Python', 9.8)
-some_reviewer.rate_student(some_student, 'Python', 6.3)
-some_reviewer.rate_student(some_student, 'Python', 7.6)
+some_student_3.rate_lecturer(some_lecturer_1, 'Python', 9.0)
+some_student_3.rate_lecturer(some_lecturer_2, 'Python', 9.3)
+some_student_3.rate_lecturer(some_lecturer_3, 'Python', 9.6)
+some_lecturer_list = [[some_lecturer_1, 'Python', 9.0], [some_lecturer_2, 'Python', 9.3], [some_lecturer_3, 'Python', 9.6]]
+
+some_reviewer.rate_student(some_student_1, 'Python', 9.8)
+some_reviewer.rate_student(some_student_2, 'Python', 6.3)
+some_reviewer.rate_student(some_student_3, 'Python', 7.6)
+some_student_list = [some_student_1, some_student_2, some_student_3]
 
 
 
-
-
-print(f'{some_reviewer} \n{some_lecturer} \n{some_student}')
+print(f'{some_reviewer} \n{some_lecturer_3} \n{some_student_3}')
